@@ -1,0 +1,72 @@
+<script lang="ts">
+	// @ts-ignore
+	import RawMaterialSymbolsPerson from '~icons/material-symbols/person?raw&width=24&height=24&class=icon';
+	// @ts-ignore
+	import RawMdiChevronDown from '~icons/mdi/chevron-down?raw&width=24px&height=24px&class=icon';
+	// @ts-ignore
+	import RawMdiChevronUp from '~icons/mdi/chevron-up?raw&width=24px&height=24px&class=icon';
+	// @ts-ignore
+	import RawMdiAccountGroup from '~icons/mdi/account-group?raw&width=24px&height=24px&class=icon';
+	// @ts-ignore
+	import RawMdiSitemapOutline from '~icons/mdi/sitemap-outline?raw&width=24px&height=24px&class=icon';
+
+    // components
+	import SidebarMenuItem from './SidebarMenuItem.svelte';
+	import SidebarAnchorMenuItem from './SidebarAnchorMenuItem.svelte';
+
+	let isExpanded = false;
+
+	function toggleExpanded() {
+		isExpanded = !isExpanded;
+	}
+
+	$: cssVarStyle = `${isExpanded ? '' : 'display: none'}`;
+</script>
+
+<div class="px-0 menu-list-group">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<div
+		class={`menu-list-group-header menu-list-item ${isExpanded && 'darken'}`}
+		tabindex="0"
+		role="button"
+		aria-expanded={isExpanded}
+		on:click={() => toggleExpanded()}
+	>
+		<SidebarMenuItem class="[&&]:p-0 -mr-4">
+			<div slot="icon">{@html RawMaterialSymbolsPerson}</div>
+			<div slot="title">People</div>
+		</SidebarMenuItem>
+		<div
+			class="inline-flex self-center justify-end h-6 m-0 menu-list-group-header-append-icon min-w-12"
+		>
+			{#if isExpanded}
+				{@html RawMdiChevronUp}
+			{:else}
+				{@html RawMdiChevronDown}
+			{/if}
+		</div>
+	</div>
+	<div class="menu-list-group-items" style={cssVarStyle}>
+		<SidebarAnchorMenuItem href="/people" class="[&&]:pl-12">
+			<div slot="icon">{@html RawMdiAccountGroup}</div>
+			<div slot="title">Summary</div>
+		</SidebarAnchorMenuItem>
+		<SidebarAnchorMenuItem href="/people" class="[&&]:pl-12">
+			<div slot="icon">{@html RawMdiSitemapOutline}</div>
+			<div slot="title">Org Chart</div>
+		</SidebarAnchorMenuItem>
+	</div>
+</div>
+
+<style>
+	.menu-list-group-header {
+		color: #fff;
+		min-height: 40px;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	.darken {
+		background-color: #0f1523 !important;
+	}
+</style>
