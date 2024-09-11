@@ -5,14 +5,9 @@
 	import RawMdiChevronDown from '~icons/mdi/chevron-down?raw&width=24px&height=24px&class=icon';
 	// @ts-ignore
 	import RawMdiChevronUp from '~icons/mdi/chevron-up?raw&width=24px&height=24px&class=icon';
-	// @ts-ignore
-	import RawMdiAccountGroup from '~icons/mdi/account-group?raw&width=24px&height=24px&class=icon';
-	// @ts-ignore
-	import RawMdiSitemapOutline from '~icons/mdi/sitemap-outline?raw&width=24px&height=24px&class=icon';
 
     // components
 	import SidebarMenuItem from './SidebarMenuItem.svelte';
-	import SidebarAnchorMenuItem from './SidebarAnchorMenuItem.svelte';
 
 	let isExpanded = false;
 
@@ -32,7 +27,7 @@
 		aria-expanded={isExpanded}
 		on:click={() => toggleExpanded()}
 	>
-		<SidebarMenuItem class="[&&]:p-0 -mr-4">
+		<SidebarMenuItem class="!p-0 -mr-4">
 			<div slot="icon">{@html RawMaterialSymbolsPerson}</div>
 			<div slot="title">People</div>
 		</SidebarMenuItem>
@@ -47,14 +42,7 @@
 		</div>
 	</div>
 	<div class="menu-list-group-items" style={cssVarStyle}>
-		<SidebarAnchorMenuItem href="/people" class="[&&]:pl-12">
-			<div slot="icon">{@html RawMdiAccountGroup}</div>
-			<div slot="title">Summary</div>
-		</SidebarAnchorMenuItem>
-		<SidebarAnchorMenuItem href="/people" class="[&&]:pl-12">
-			<div slot="icon">{@html RawMdiSitemapOutline}</div>
-			<div slot="title">Org Chart</div>
-		</SidebarAnchorMenuItem>
+		<slot></slot>
 	</div>
 </div>
 
