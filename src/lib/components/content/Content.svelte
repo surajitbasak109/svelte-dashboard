@@ -12,9 +12,7 @@
       <div class="application !bg-[#f2f3f8] text-black/[.87] leading-[1.5] flex relative">
         <div class="flex flex-col flex-auto application-wrap min-h-[100vh] max-w-full relative">
           <br />
-          <div class="flex flex-wrap justify-center flex-auto m-0">
-            <slot></slot>
-          </div>
+          <slot></slot>
         </div>
       </div>
     </div>

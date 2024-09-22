@@ -22,7 +22,7 @@ async function create_default_user() {
       data: userData
     });
   } else {
-    console.log("User already exist");
+    console.log('User already exist');
   }
 }
 

@@ -10,12 +10,13 @@
     navigator.userAgent
   );
 
-  const menuWidth = isPossiblyMobile ? 200 : 388;
+  const menuWidth = isPossiblyMobile ? 250 : 300;
+  const leftSpacing = isPossiblyMobile ? 10 : 20;
 
   let menuStyle = {
     'min-width': `${menuWidth}px`,
     top: '73px',
-    left: `calc(100vw - ${menuWidth + 12}px)`,
+    left: `calc(100vw - ${menuWidth + leftSpacing}px)`,
     'transform-origin': 'left top',
     'z-index': 8
   };
@@ -40,13 +41,13 @@
     class="fixed inline-block menu-content"
     role="menu"
     style={cssVarStyles}
-    use:clickOutside
+    use:clickOutside={'.ignore-me'}
     on:click_outside={() => clickOutise()}>
     <div class="bg-white rounded-none menu-list text-black/[.87] border-white">
-      <ProfileMenuItem>
+      <ProfileMenuItem href="/admin/profile">
         {@html RawMaterialSymbolsPerson} &emsp; Profile
       </ProfileMenuItem>
-      <ProfileMenuItem class="!text-[#f44336] !:caret-[#f44336]">
+      <ProfileMenuItem href="#" class="!text-[#f44336] !:caret-[#f44336]">
         {@html RawMaterialSymbolsLogoutSharp} &emsp; Logout
       </ProfileMenuItem>
     </div>

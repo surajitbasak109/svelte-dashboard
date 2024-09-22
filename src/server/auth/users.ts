@@ -5,8 +5,11 @@ import { hashSync } from 'bcrypt';
 import { add_user_to_role } from '../roles';
 
 export type RegsiteredUser = Pick<User, 'email' | 'password'>;
+export type UpdateProfileData = Pick<User, 'name' | 'avatar_url'>;
 
-export interface UserWithRoles extends User {
+export type UserWithoutPassword = Omit<User, 'password'>;
+
+export interface UserWithRoles extends UserWithoutPassword {
   roles: string[];
 }
 
@@ -44,7 +47,20 @@ export async function find_user_by_email(email: string) {
   });
 }
 
-export async function find_user_by_session_id(session_id: string) {
+export async function update_profile(userId: string, profile: UpdateProfileData) {
+  return await prisma_client.user.update({
+    where: {
+      id: userId
+    },
+    data: {
+      name: profile.name,
+      avatar_url: profile.avatar_url
+    }
+  });
+}
+
+export async function find_user_by_session_id(session_id: string | undefined) {
+  if (!session_id) throw new Error('Session Id not passed');
   const userWithRoles = await prisma_client.user.findUnique({
     where: {
       id: session_id

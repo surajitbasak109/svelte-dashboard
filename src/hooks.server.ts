@@ -35,7 +35,10 @@ export const alreadyLogged: Handle = async function ({ event, resolve }) {
 };
 
 export const admin: Handle = async function ({ event, resolve }) {
-  if (event.route.id?.startsWith('/(site)/admin') && !event.locals?.user?.roles?.includes('admin')) {
+  if (
+    event.route.id?.startsWith('/(site)/admin') &&
+    !event.locals?.user?.roles?.includes('admin')
+  ) {
     redirect(302, '/login');
   }
   return resolve(event);

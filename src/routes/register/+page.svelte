@@ -1,6 +1,6 @@
 <script lang="ts">
   import AuthButton from '$/lib/components/UI/AuthButton.svelte';
-import Input from '$/lib/components/UI/Input.svelte';
+  import Input from '$/lib/components/UI/Input.svelte';
   import logo from '$assets/logo.png';
   import type { PageData, ActionData } from './$types.js';
   export let form: ActionData;

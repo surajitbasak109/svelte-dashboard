@@ -20,23 +20,23 @@
   style={`height:100vh; top:70px; max-height:calc(100% - 70px); transform:${sidebar_status_value == 'HIDDEN' ? 'translateX(-100%)' : 'translateX(0%)'}; width:${sidebar_width_value}px`}>
   <div class="h-full overflow-x-hidden overflow-y-auto navigation-drawer-content">
     <div class="mt-2 text-white rounded-none menu-list border-[#1e1e1e]">
-      <SidebarAnchorMenuItem href="/">
+      <SidebarAnchorMenuItem href="/admin">
         <div slot="icon">
           {@html RawMaterialSymbolsDashboard}
         </div>
         <div slot="title">Dashboard</div>
       </SidebarAnchorMenuItem>
       <SidebarMenuGroup>
-        <SidebarAnchorMenuItem href="/people" class="!pl-12">
+        <SidebarAnchorMenuItem href="/admin/people" class="!pl-12">
           <div slot="icon">{@html RawMdiAccountGroup}</div>
           <div slot="title">Summary</div>
         </SidebarAnchorMenuItem>
-        <SidebarAnchorMenuItem href="/people/org" class="!pl-12">
+        <SidebarAnchorMenuItem href="/admin/people/org" class="!pl-12">
           <div slot="icon">{@html RawMdiSitemapOutline}</div>
           <div slot="title">Org Chart</div>
         </SidebarAnchorMenuItem>
       </SidebarMenuGroup>
-      <SidebarAnchorMenuItem href="/settings">
+      <SidebarAnchorMenuItem href="/admin/settings">
         <div slot="icon">
           {@html RawMaterialSymbolsSettings}
         </div>

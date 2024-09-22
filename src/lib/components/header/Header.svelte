@@ -6,15 +6,21 @@
   import BasicButton from '$lib/components/UI/BasicButton.svelte';
   import ProfileMenu from '$lib/components/header/ProfileMenu.svelte';
   import { toggle_hide } from '$store/sidebar_status';
+  import type { UserWithoutPassword, UserWithRoles } from '$/server/auth/users';
+  import { get_initials } from '$/utilities/get_initials';
+  import { user_state } from '$/store/user';
 
-  export const config = {
+  let user: UserWithoutPassword | null = null;
+
+  const unsubscribe = user_state.subscribe((value) => {
+    user = value;
+  });
+
+  const config = {
     appName: 'Dashboard',
     user: {
-      initial: 'SB',
-      organization: {
-        name: 'New Horizon',
-        imageLink: 'https://placehold.co/80x60'
-      }
+      initial: get_initials(user?.name),
+      name: user?.name ?? 'Unnamed user'
     }
   };
   let isProfileMenuOpen = false;
@@ -22,19 +28,25 @@
   function setIsProfileMenuOpen(isOpen = true) {
     isProfileMenuOpen = isOpen;
   }
+
+  unsubscribe();
 </script>
 
-<header class="header" style="left: 0; right: 0; margin-top: 0; transform: translateY(0px);">
+<header
+  class="header ignore-me"
+  style="left: 0; right: 0; margin-top: 0; transform: translateY(0px);">
   <div
     style="height: 70px;"
     class="toolbar-content flex items-center relative z-0 py-[4px] px-[16px]">
     <BasicButton class="ml-[-12px] h-12 w-12" on:click={() => toggle_hide()}>
       {@html RawMaterialSymbolsViewList}
     </BasicButton>
-    <a href="/" target="_blank" class="text-xs sm:text-[18px] sm:mx-2">{config.appName}</a>
+    <a href="/admin" class="text-xs sm:text-[18px] sm:mx-2">{config.appName}</a>
     <div class="flex-grow"></div>
     <div class="flex-grow"></div>
-    <div class="user text-center border-l-[#d8d8d8] min-w-[160px] sm:min-w-[305px]">
+    <button
+      class="user text-center border-l-[#d8d8d8] min-w-[160px] sm:min-w-[200px]"
+      on:click={() => setIsProfileMenuOpen(!isProfileMenuOpen)}>
       <div class="flex items-center content-center flex-wrap m-[-12px] flex-[0_0_25%]">
         <div class="flex flex-row max-w-[25%]">
           <div
@@ -49,19 +61,14 @@
           id="app-bar-role-and-name"
           class="app-bar px-0 mx-0 cursor-pointer flex-[0_0_75%] max-w-[75%]">
           <div class="text-xs sm:text-[18px] flex justify-end mt-1">
-            <span class="mx-0 my-auto">{config.user.organization.name}</span>
-            <div class="items-center hidden p-0 mx-2 sm:flex">
-              <img src={config.user.organization.imageLink} alt="User's Organization" />
-            </div>
-            <BasicButton
-              on:click={() => setIsProfileMenuOpen(true)}
-              class="min-w-0 min-h-0 p-0 my-auto ml-2 text-xs w-7 h-7">
+            <span class="mx-0 my-auto">{config.user.name}</span>
+            <BasicButton class="min-w-0 min-h-0 p-0 my-auto ml-2 text-xs w-7 h-7">
               {@html RawMdiChevronDown}
             </BasicButton>
           </div>
         </div>
       </div>
-    </div>
+    </button>
   </div>
 
   <ProfileMenu on:setIsOpen={() => setIsProfileMenuOpen(false)} isMenuOpen={isProfileMenuOpen} />
