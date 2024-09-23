@@ -4,9 +4,9 @@
   // @ts-ignore
   import RawMdiChevronDown from '~icons/mdi/chevron-down?raw&width=24px&height=24px';
   import BasicButton from '$lib/components/UI/BasicButton.svelte';
-  import ProfileMenu from '$lib/components/header/ProfileMenu.svelte';
+  import ProfileMenu from '$lib/components/admin/header/ProfileMenu.svelte';
   import { toggle_hide } from '$store/sidebar_status';
-  import type { UserWithoutPassword, UserWithRoles } from '$/server/auth/users';
+  import type { UserWithoutPassword } from '$/server/auth/users';
   import { get_initials } from '$/utilities/get_initials';
   import { user_state } from '$/store/user';
 
