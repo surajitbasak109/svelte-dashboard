@@ -8,8 +8,8 @@ async function create_default_user() {
   const hashedPassword = hashSync('password@123', SALT_ROUNDS);
 
   const userData = {
-    name: 'Surajit Basak',
-    email: 'surajitbasak109@gmail.com',
+    name: 'CRM App',
+    email: 'crm@app.ai',
     password: hashedPassword
   };
 
@@ -18,8 +18,21 @@ async function create_default_user() {
   });
 
   if (!existingUser) {
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: userData
+    });
+
+    const adminRole = await prisma.role.findUnique({
+      where: {
+        name: 'admin'
+      }
+    });
+
+    await prisma.userRole.create({
+      data: {
+        userId: user.id,
+        roleId: adminRole?.id
+      }
     });
   } else {
     console.log('User already exist');

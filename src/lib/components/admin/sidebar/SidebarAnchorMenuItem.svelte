@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   let href: string | null = null;
   let className: string | null = '';
-  const isActive = $page.route.id?.includes(href || '');
+  const isActive = $page.route?.id?.includes(href || '');
   export { href, className as class };
 </script>
 

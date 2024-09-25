@@ -18,6 +18,17 @@ export const actions = {
       user = await db.user.findUnique({
         where: {
           email: email
+        },
+        include: {
+          roles: {
+            select: {
+              role: {
+                select: {
+                  name: true
+                }
+              }
+            }
+          }
         }
       });
     } catch (error) {
@@ -43,6 +54,8 @@ export const actions = {
       maxAge: 60 * 60 * 24 * 7 // one week
     });
 
-    redirect(302, '/protected');
+    const redirectRoute = user.roles[0].role.name == 'admin' ? '/admin' : '/protected';
+    
+    redirect(302, redirectRoute);
   }
 } satisfies Actions;

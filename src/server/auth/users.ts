@@ -43,6 +43,17 @@ export async function find_user_by_email(email: string) {
   return prisma_client.user.findUnique({
     where: {
       email
+    },
+    include: {
+      roles: {
+        select: {
+          role: {
+            select: {
+              name: true
+            }
+          }
+        }
+      }
     }
   });
 }

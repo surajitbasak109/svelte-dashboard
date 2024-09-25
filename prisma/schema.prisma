@@ -16,6 +16,7 @@ datasource db {
 
 model User {
   id          String     @id @default(uuid())
+  name        String?
   username    String?
   password    String
   email       String    @unique
@@ -25,7 +26,17 @@ model User {
   created_at  DateTime   @default(now())
   updated_at  DateTime   @updatedAt
   roles       UserRole[]
-  name        String?
+  userVerify  UserVerify?
+}
+
+model UserVerify {
+   id             String     @id @default(uuid())
+   user           User       @relation(fields: [useId], references: [id])
+   useId          String     @unique
+   token          String
+   created_at     DateTime   @default(now())
+   updated_at     DateTime   @updatedAt
+   verified_at    DateTime?  
 }
 
 model Role {

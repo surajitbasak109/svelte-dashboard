@@ -1,18 +1,30 @@
 -- CreateTable
 CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NULL,
+    `username` VARCHAR(191) NULL,
+    `password` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `github_id` INTEGER NULL,
     `avatar_url` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `email` VARCHAR(191) NULL,
-    `github_id` INTEGER NOT NULL,
     `updated_at` DATETIME(3) NOT NULL,
-    `username` VARCHAR(191) NULL,
-    `theme` VARCHAR(191) NOT NULL DEFAULT 'system',
-    `name` VARCHAR(191) NULL,
-    `twitter` VARCHAR(191) NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     UNIQUE INDEX `User_github_id_key`(`github_id`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `UserVerify` (
+    `id` VARCHAR(191) NOT NULL,
+    `useId` VARCHAR(191) NOT NULL,
+    `token` VARCHAR(191) NOT NULL,
+    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` DATETIME(3) NOT NULL,
+    `verified_at` DATETIME(3) NULL,
+
+    UNIQUE INDEX `UserVerify_useId_key`(`useId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -53,6 +65,9 @@ CREATE TABLE `Session` (
     INDEX `Session_user_id_idx`(`user_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `UserVerify` ADD CONSTRAINT `UserVerify_useId_fkey` FOREIGN KEY (`useId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `UserRole` ADD CONSTRAINT `UserRole_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
