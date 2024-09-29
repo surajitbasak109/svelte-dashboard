@@ -7,6 +7,7 @@
 
   let email = '';
   let password = '';
+  let confirmPassword = '';
 
   if (form?.email) {
     email = form?.email;
@@ -52,7 +53,7 @@
         label="Confirm password"
         id="confirm-password"
         type="password"
-        bind:value={password}
+        bind:value={confirmPassword}
         autocomplete="current-password"
         name="confirm-password"
         required />

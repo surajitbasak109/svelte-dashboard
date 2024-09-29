@@ -1,6 +1,6 @@
 import { update_profile } from '$/server/auth/users.js';
 import { upload_to_cloudinary_as_stream } from '$/utilities/upload_file_to_cloudinary.js';
-import { fail } from '@sveltejs/kit';
+import { fail, json } from '@sveltejs/kit';
 
 export const POST = async ({ request, locals }) => {
   const user = locals.user;
@@ -12,9 +12,10 @@ export const POST = async ({ request, locals }) => {
   const formData = await request.formData();
   const first_name = formData.get('first_name') as string;
   const last_name = formData.get('last_name') as string;
+  const username = formData.get('username') as string;
   const avatar_image = formData.get('avatar_image') as File | null;
 
-  if (!first_name || !last_name) {
+  if (!first_name || !last_name || !username) {
     fail(400, { missing: true });
   }
 
@@ -29,18 +30,18 @@ export const POST = async ({ request, locals }) => {
         avatar_url = result.url;
       }
     } catch (e) {
-      throw new Error(e);
+      console.error(e);
+      throw new Error("Error when trying to upload");
     }
   }
 
   const profileUpdated = await update_profile(user.id, {
     name,
-    avatar_url
+    avatar_url,
+    username
   });
 
-  console.log(profileUpdated);
-
-  return Response.json({
+  return json({
     success: true,
     data: profileUpdated
   });

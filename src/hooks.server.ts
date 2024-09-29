@@ -9,9 +9,14 @@ export const auth: Handle = async function ({ event, resolve }) {
   const sessionId = event.cookies.get('session_id');
 
   if (sessionId) {
-    const user = await find_user_by_session_id(sessionId);
-    if (user) {
-      event.locals.user = user;
+    try {
+      const user = await find_user_by_session_id(sessionId);
+      if (user) {
+        event.locals.user = user;
+      }
+    } catch (error) {
+      console.error(error);
+      event.cookies.delete('session_id', { path: '/' });
     }
   }
 
@@ -21,7 +26,7 @@ export const auth: Handle = async function ({ event, resolve }) {
 
 export const alreadyLogged: Handle = async function ({ event, resolve }) {
   if (
-    (event.route.id?.startsWith('/login') || event.route.id?.startsWith('/register')) &&
+    (event.route.id?.startsWith('/(site)/login') || event.route.id?.startsWith('/(site)/register')) &&
     event.locals?.user
   ) {
     if (event.locals?.user.roles?.includes('admin')) {

@@ -17,7 +17,9 @@ const config = {
       $store: 'src/store',
       $assets: 'src/assets',
       $server: 'src/server',
-      $lib: 'src/lib'
+      $lib: 'src/lib',
+      $config: 'src/config',
+      $utilities: 'src/utilities',
     }
   }
 };

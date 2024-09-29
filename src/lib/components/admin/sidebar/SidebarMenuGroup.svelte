@@ -1,7 +1,5 @@
 <script lang="ts">
   // @ts-ignore
-  import RawMaterialSymbolsPerson from '~icons/material-symbols/person?raw&width=24&height=24&class=icon';
-  // @ts-ignore
   import RawMdiChevronDown from '~icons/mdi/chevron-down?raw&width=24px&height=24px&class=icon';
   // @ts-ignore
   import RawMdiChevronUp from '~icons/mdi/chevron-up?raw&width=24px&height=24px&class=icon';
@@ -15,6 +13,9 @@
     isExpanded = !isExpanded;
   }
 
+  export let title: string;
+  export let icon: string;
+
   $: cssVarStyle = `${isExpanded ? '' : 'display: none'}`;
 </script>
 
@@ -27,8 +28,8 @@
     aria-expanded={isExpanded}
     on:click={() => toggleExpanded()}>
     <SidebarMenuItem class="!p-0 -mr-4">
-      <div slot="icon">{@html RawMaterialSymbolsPerson}</div>
-      <div slot="title">People</div>
+      <div slot="icon">{@html icon}</div>
+      <div slot="title">{title}</div>
     </SidebarMenuItem>
     <div
       class="inline-flex self-center justify-end h-6 m-0 menu-list-group-header-append-icon min-w-12">

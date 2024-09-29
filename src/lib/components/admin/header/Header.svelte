@@ -6,21 +6,16 @@
   import BasicButton from '$lib/components/UI/BasicButton.svelte';
   import ProfileMenu from '$lib/components/admin/header/ProfileMenu.svelte';
   import { toggle_hide } from '$store/sidebar_status';
-  import type { UserWithoutPassword } from '$/server/auth/users';
   import { get_initials } from '$/utilities/get_initials';
-  import { user_state } from '$/store/user';
+  import { getContext } from 'svelte';
 
-  let user: UserWithoutPassword | null = null;
-
-  const unsubscribe = user_state.subscribe((value) => {
-    user = value;
-  });
+  const user = getContext('user');
 
   const config = {
-    appName: 'Dashboard',
+    appName: 'CRM App',
     user: {
-      initial: get_initials(user?.name),
-      name: user?.name ?? 'Unnamed user'
+      initial: get_initials($user?.name),
+      name: $user?.name ?? 'Unnamed user'
     }
   };
   let isProfileMenuOpen = false;
@@ -28,8 +23,6 @@
   function setIsProfileMenuOpen(isOpen = true) {
     isProfileMenuOpen = isOpen;
   }
-
-  unsubscribe();
 </script>
 
 <header

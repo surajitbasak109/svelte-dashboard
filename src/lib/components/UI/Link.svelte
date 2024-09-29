@@ -1,10 +1,10 @@
 <script lang="ts">
   export let href: string = '#';
-  export let size: null | 'md' | 'lg' = 'lg';
+  export let size: null | 'md' | 'lg' | 'sm' = 'lg';
   export let block: boolean | null = false;
   export let style: 'outline' | 'primary' | 'inverted' | 'muted' | null = 'primary';
 
-  const sizes = { lg: 'px-5 py-2.5', md: 'px-4 py-2' };
+  const sizes = { lg: 'px-5 py-2.5', md: 'px-4 py-2', sm: 'px-2 py-1' };
 
   const styles = {
     outline: 'bg-white border-2 border-black hover:bg-gray-100 text-black ',

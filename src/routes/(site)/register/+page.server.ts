@@ -1,4 +1,7 @@
+import { CRM_QUEUE_TYPES } from '$/const';
+import crmQueue from '$/jobs/job-queue';
 import { create_user, find_user_by_email } from '$/server/auth/users';
+import { generateVerificationLink } from '$/utilities/generate_verification_link';
 import { dev } from '$app/environment';
 import type { Actions } from '@sveltejs/kit';
 import { fail, redirect } from '@sveltejs/kit';
@@ -33,8 +36,18 @@ export const actions = {
       maxAge: 60 * 60 * 24 * 7 // one week
     });
 
+    if (user.userVerify && !user.userVerify.verified_at) {
+      crmQueue.add({
+        type: CRM_QUEUE_TYPES.SEND_VERIFICATION_LINK,
+        data: {
+          email: user.email,
+          verificationLInk: generateVerificationLink(user.userVerify.token),
+        }
+      })
+    }
+
     if (user.roles.includes('admin')) {
-      redirect(302, '/admin');
+      redirect(302, '/admin/profile');
     } else {
       redirect(302, '/protected');
     }
