@@ -15,7 +15,7 @@ export const auth: Handle = async function ({ event, resolve }) {
         event.locals.user = user;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       event.cookies.delete('session_id', { path: '/' });
     }
   }

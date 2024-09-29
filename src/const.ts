@@ -10,3 +10,7 @@ export interface User {
   updated_at: string;
   name: string;
 }
+
+export const CRM_QUEUE_TYPES = {
+  SEND_VERIFICATION_LINK: 'send-verification-link',
+}

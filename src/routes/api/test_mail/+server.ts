@@ -1,4 +1,4 @@
-import { Mailer } from '$/utilities/mailer';
+import Mailer from '$/utilities/mailer';
 export const GET = async () => {
   const mailer = new Mailer();
   try {

@@ -1,19 +1,19 @@
 <script lang="ts">
   import AuthButton from '$/lib/components/UI/AuthButton.svelte';
   import Input from '$/lib/components/UI/Input.svelte';
-  import type { UserWithoutPassword } from '$/server/auth/users';
-  import { user_state } from '$/store/user';
+  import getFirstAndLastName from '$/utilities/get_first_and_last_name';
+  import isUserVerified from '$/utilities/is_user_verified';
+  import { getContext } from 'svelte';
   import Dropzone from 'svelte-file-dropzone';
 
-  let user: UserWithoutPassword | null = null;
+  const user = getContext('user');
 
-  const unsubscribe = user_state.subscribe((value) => {
-    user = value;
-  });
+  const firstAndLastName = getFirstAndLastName($user?.name);
+  const userVerified = isUserVerified($user?.userVerify);
 
-  let username = '';
-  let firstName = '';
-  let lastName = '';
+  let username = $user?.username ?? '';
+  let firstName = firstAndLastName?.firstName ?? '';
+  let lastName = firstAndLastName?.lastName ?? '';
   let avatarImageFile: File | string = '';
   let clientError: string | null = null;
 
@@ -22,7 +22,7 @@
     avatarImageFile = acceptedFiles[0];
   }
 
-  async function handleSubmit() {
+  async function updateProfile() {
     if (!firstName || !lastName) {
       clientError = 'Please enter first name and last name';
     }
@@ -42,7 +42,7 @@
       });
 
       if (response.ok) {
-        console.log('File has been uploaded');
+        alert('Profile updated');
       } else {
         console.error('File could not be uploaded');
       }
@@ -50,8 +50,6 @@
       console.error(e);
     }
   }
-
-  unsubscribe();
 </script>
 
 <svelte:head>
@@ -60,12 +58,18 @@
 
 <div class="box-border flex justify-center flex-auto px-5 m-0 gap-x-3">
   <section class="w-full md:w-8/12">
-    <div class="p-4 bg-white rounded-sm shadow-lg">
-      <h1 class="my-2 text-2xl font-bold">Update your profile</h1>
+    {#if !userVerified}
+      <div class="p-4 mb-3 bg-white rounded-sm shadow-lg">
+        <h2 class="my-2 text-2xl font-bold">Verify your account</h2>
+        <p class="text-sm text-slate-600">We've sent you a verification link, please verify your account</p>
+      </div>
+    {/if}
+    <div class="p-4 mb-3 bg-white rounded-sm shadow-lg">
+      <h2 class="my-2 text-2xl font-bold">Update your profile</h2>
       {#if clientError}
         <p class="text-sm text-red-700">{clientError}</p>
       {/if}
-      <form on:submit|preventDefault={handleSubmit}>
+      <form on:submit|preventDefault={updateProfile}>
         <div class="flex justify-between w-full mb-2 gap-x-2">
           <Input
             class="w-1/2"
@@ -86,8 +90,8 @@
             bind:value={lastName}
             placeholder="Enter your last name" />
         </div>
-        
-        {#if !user?.username}
+
+        {#if !$user?.username}
           <Input
             class="w-1/2"
             type="text"
@@ -113,26 +117,26 @@
       </form>
     </div>
   </section>
-  {#if user}
+  {#if $user}
     <section class="hidden md:block md:w-4/12">
       <div class="p-4 bg-white rounded-sm shadow-lg">
         <h2 class="my-2 text-2xl font-bold">Profile</h2>
-        {#if user.avatar_url}
+        {#if $user.avatar_url}
           <div class="my-2">
-            <img src={user.avatar_url} alt="Avatar" class="max-w-full" />
+            <img src={$user.avatar_url} alt="Avatar" class="max-w-full" />
           </div>
         {/if}
         <p class="mb-1">
           <strong>Name</strong>
-          : {user.name ?? 'not provided'}
+          : {$user.name ?? 'not provided'}
         </p>
         <p class="mb-1">
           <strong>User name</strong>
-          : {user.username ?? 'not provided'}
+          : {$user.username ?? 'not provided'}
         </p>
         <p class="mb-1">
           <strong>Email</strong>
-          : {user.email}
+          : {$user.email}
         </p>
       </div>
     </section>

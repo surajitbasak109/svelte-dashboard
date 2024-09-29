@@ -30,8 +30,8 @@ async function create_default_user() {
 
     await prisma.userRole.create({
       data: {
-        userId: user.id,
-        roleId: adminRole?.id
+        userId: user.id as string,
+        roleId: adminRole?.id as string,
       }
     });
   } else {

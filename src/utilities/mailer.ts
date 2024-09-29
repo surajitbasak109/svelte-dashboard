@@ -10,7 +10,10 @@ type MailOptions = {
   html?: string;
 };
 
-export class Mailer {
+export default class Mailer {
+  /**
+   * The transporter instance of nodemailer
+   */
   transporter: nodemailer.Transporter;
   constructor() {
     this.transporter = this.createTransporter();
@@ -23,6 +26,7 @@ export class Mailer {
       }
     } = mail;
     return nodemailer.createTransport({
+      // @ts-expect-error This is not necessary
       host,
       port,
       secure: false,

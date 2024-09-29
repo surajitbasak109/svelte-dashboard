@@ -6,9 +6,8 @@
   import RawMaterialSymbolsLogoutSharp from '~icons/material-symbols/logout-sharp?raw&width=24&height=24&class=icon';
   import ProfileMenuItem from './ProfileMenuItem.svelte';
   import clickOutside from '$lib/click-outside';
-  const isPossiblyMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
+  import logout from '$/utilities/logout';
+  import isPossiblyMobile from '$/utilities/is_possibly_mobile';
 
   const menuWidth = isPossiblyMobile ? 250 : 300;
   const leftSpacing = isPossiblyMobile ? 10 : 20;
@@ -33,6 +32,11 @@
     dispatch('setIsOpen');
   }
 
+  function onLogoutClick() {
+    clickOutise();
+    logout();
+  }
+
   export { isOpen as isMenuOpen };
 </script>
 
@@ -44,10 +48,10 @@
     use:clickOutside={'.ignore-me'}
     on:click_outside={() => clickOutise()}>
     <div class="bg-white rounded-none menu-list text-black/[.87] border-white">
-      <ProfileMenuItem href="/admin/profile">
+      <ProfileMenuItem href="/admin/profile" on:click={clickOutise}>
         {@html RawMaterialSymbolsPerson} &emsp; Profile
       </ProfileMenuItem>
-      <ProfileMenuItem href="#" class="!text-[#f44336] !:caret-[#f44336]">
+      <ProfileMenuItem href="#" class="!text-[#f44336] !:caret-[#f44336]" on:click={onLogoutClick}>
         {@html RawMaterialSymbolsLogoutSharp} &emsp; Logout
       </ProfileMenuItem>
     </div>

@@ -7,6 +7,7 @@ async function main() {
     data: [{ name: 'author' }, { name: 'admin' }, { name: 'user' }],
     skipDuplicates: true
   });
+  
   console.log(role);
 }
 

@@ -5,7 +5,7 @@ import { hashSync } from 'bcrypt';
 import { add_user_to_role } from '../roles';
 
 export type RegsiteredUser = Pick<User, 'email' | 'password'>;
-export type UpdateProfileData = Pick<User, 'name' | 'avatar_url'>;
+export type UpdateProfileData = Pick<User, 'name' | 'avatar_url' | 'username'>;
 
 export type UserWithoutPassword = Omit<User, 'password'>;
 
@@ -18,7 +18,15 @@ export async function create_user(user: RegsiteredUser) {
   const newUser = await prisma_client.user.create({
     data: {
       email: user.email,
-      password: hashedPassword
+      password: hashedPassword,
+      userVerify: {
+        create: {
+          token: crypto.randomUUID()
+        }
+      }
+    },
+    include: {
+      userVerify: true
     }
   });
 
@@ -65,13 +73,14 @@ export async function update_profile(userId: string, profile: UpdateProfileData)
     },
     data: {
       name: profile.name,
-      avatar_url: profile.avatar_url
+      avatar_url: profile.avatar_url,
+      username: profile.username
     }
   });
 }
 
 export async function find_user_by_session_id(session_id: string | undefined) {
-  if (!session_id) throw new Error('Session Id not passed');
+  if (!session_id) return null;
   const userWithRoles = await prisma_client.user.findUnique({
     where: {
       id: session_id
@@ -85,7 +94,8 @@ export async function find_user_by_session_id(session_id: string | undefined) {
             }
           }
         }
-      }
+      },
+      userVerify: true
     }
   });
 
@@ -99,4 +109,37 @@ export async function find_user_by_session_id(session_id: string | undefined) {
   };
 
   return user;
+}
+
+export async function verify_email_address(token: string): Promise<string> {
+  const userVerify = await prisma_client.userVerify.findFirst({
+    where: {
+      token
+    }
+  });
+
+  if (!userVerify) {
+    return 'Verification token is not valid';
+  }
+
+  if (userVerify.verified_at) {
+    return 'User is already verified';
+  }
+
+  const verified = await prisma_client.userVerify.update({
+    where: {
+      id: userVerify.id
+    },
+    data: {
+      verified_at: new Date()
+    }
+  });
+
+  if (verified) {
+    return 'User has been verified';
+  } else {
+    // Add a return statement or throw an error here
+    // For example:
+    throw new Error('Failed to verify user');
+  }
 }

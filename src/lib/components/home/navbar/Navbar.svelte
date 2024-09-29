@@ -1,7 +1,12 @@
 <script lang="ts">
+  import logout from '$/utilities/logout';
+  import { page } from '$app/stores';
+  import { getContext } from 'svelte';
   import Link from '../../UI/Link.svelte';
   import Container from '../Container.svelte';
   import MenuIcon from './MenuIcon.svelte';
+
+  const user = getContext('user');
 
   let crmAppMenu: HTMLElement;
 
@@ -21,6 +26,13 @@
     { title: 'Features', path: '/features' },
     { title: 'Career', path: '/career' }
   ];
+
+  const authMenuItems = [
+    { title: 'Login', path: '/login' },
+    { title: 'Sign up', path: '/register' }
+  ];
+
+  const routeId = $page.route?.id;
 </script>
 
 <Container>
@@ -36,22 +48,45 @@
     </div>
     <nav class="hidden w-full mt-2 lg:flex lg:w-auto lg:mt-0" bind:this={crmAppMenu}>
       <ul class="flex flex-col lg:flex-row lg:gap-3">
-        {#each menuItems as { title, path }, i (title)}
+        {#each menuItems as { title, path }}
           <li>
-            <a class="flex items-center py-2 text-gray-600 lg:px-3 hover:text-gray-900" href={path}>
+            <a
+              class="flex items-center py-2 text-gray-500 lg:px-3 hover:text-gray-900"
+              class:active={routeId?.includes(path || '')}
+              href={path}>
               <span>{title}</span>
             </a>
           </li>
         {/each}
       </ul>
       <div class="flex items-center gap-4 mt-3 lg:hidden">
-        <Link href="/login" style="muted" block={true} size="md">Log in</Link>
-        <Link href="/register" size="md" block={true}>Sign up</Link>
+        {#if $user}
+          <button class="hover:text-gray-500" on:click={logout}>Logout</button>
+        {:else}
+          <div class="items-center hidden gap-4 lg:flex">
+            <Link href="/login" style="muted" block={true} size="md">Log in</Link>
+            <Link href="/register" size="md" block={true}>Sign up</Link>
+          </div>
+        {/if}
       </div>
     </nav>
-    <div class="items-center hidden gap-4 lg:flex">
-      <a href="/login">Login</a>
-      <Link href="/register" size="md">Sign up</Link>
-    </div>
+
+    {#if $user}
+      <button class="hover:text-gray-500" on:click={logout}>Logout</button>
+    {:else}
+      <div class="items-center hidden gap-4 lg:flex">
+        {#each authMenuItems as { title, path }}
+          <Link href={path} style={routeId?.includes(path) ? 'primary' : 'outline'} size="md">
+            {title}
+          </Link>
+        {/each}
+      </div>
+    {/if}
   </header>
 </Container>
+
+<style>
+  .active {
+    color: black;
+  }
+</style>
