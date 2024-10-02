@@ -123,6 +123,9 @@ importers:
       svelte-preprocess:
         specifier: ^6.0.2
         version: 6.0.2(postcss-load-config@4.0.2(postcss@8.4.47)(ts-node@10.9.2(@types/node@22.7.1)(typescript@5.6.2)))(postcss@8.4.47)(pug@3.0.3)(svelte@4.2.19)(typescript@5.6.2)
+      sveltekit-flash-message:
+        specifier: ^2.4.4
+        version: 2.4.4(@sveltejs/kit@2.5.28(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.1)))(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.1)))(svelte@4.2.19)
       tailwindcss:
         specifier: ^3.4.10
         version: 3.4.13(ts-node@10.9.2(@types/node@22.7.1)(typescript@5.6.2))
@@ -2150,6 +2153,12 @@ packages:
   svelte@4.2.19:
     resolution: {integrity: sha512-IY1rnGr6izd10B0A8LqsBfmlT5OILVuZ7XsI0vdGPEvuonFV7NYEUK4dAkm9Zg2q0Um92kYjTpS1CAP3Nh/KWw==}
     engines: {node: '>=16'}
+
+  sveltekit-flash-message@2.4.4:
+    resolution: {integrity: sha512-CFN03chH/FMEJcBZ/8zKm7RqGee/pwb57Spbbx8QCQPhe7N9ofZHd9iYV2vVy4E9glBo/oQ1IG7VQje6L092wg==}
+    peerDependencies:
+      '@sveltejs/kit': 1.x || 2.x
+      svelte: 3.x || 4.x || >=5.0.0-next.51
 
   tailwindcss@3.4.13:
     resolution: {integrity: sha512-KqjHOJKogOUt5Bs752ykCeiwvi0fKVkr5oqsFNt/8px/tA8scFPIlkygsf6jXrfCqGHz7VflA6+yytWuM+XhFw==}
@@ -4355,6 +4364,11 @@ snapshots:
       locate-character: 3.0.0
       magic-string: 0.30.11
       periscopic: 3.1.0
+
+  sveltekit-flash-message@2.4.4(@sveltejs/kit@2.5.28(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.1)))(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.1)))(svelte@4.2.19):
+    dependencies:
+      '@sveltejs/kit': 2.5.28(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.1)))(svelte@4.2.19)(vite@5.4.8(@types/node@22.7.1))
+      svelte: 4.2.19
 
   tailwindcss@3.4.13(ts-node@10.9.2(@types/node@22.7.1)(typescript@5.6.2)):
     dependencies:

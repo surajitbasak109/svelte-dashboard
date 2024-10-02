@@ -46,6 +46,7 @@
     "svelte-check": "^4.0.0",
     "svelte-fullcalendar": "^3.0.0",
     "svelte-preprocess": "^6.0.2",
+    "sveltekit-flash-message": "^2.4.4",
     "tailwindcss": "^3.4.10",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.1",
