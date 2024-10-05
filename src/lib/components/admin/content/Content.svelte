@@ -10,7 +10,8 @@
   <div class="relative flex-auto max-w-full content-wrap">
     <div id="core-view">
       <div class="application !bg-[#f2f3f8] text-black/[.87] leading-[1.5] flex relative">
-        <div class="flex flex-col flex-auto application-wrap min-h-[100vh] max-w-full relative py-3">
+        <div
+          class="flex flex-col flex-auto application-wrap min-h-[100vh] max-w-full relative py-3">
           <slot></slot>
         </div>
       </div>

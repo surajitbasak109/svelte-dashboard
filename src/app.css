@@ -191,3 +191,63 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p:not(:is(h1, h2, h3, h4, h5, h6) + p) {
+  margin-top: 1.75rem;
+}
+
+.prose :is(ul, ol) {
+  padding-left: 1.25rem;
+}
+
+.prose :is(ul) {
+  list-style-type: '🔥';
+}
+
+.prose :is(ol) {
+  list-style-type: decimal-leading-zero;
+}
+
+.prose :is(ul, ol) li {
+  margin-block: 0.5rem;
+  padding-inline-start: 0.5rem;
+}
+
+.prose pre {
+  margin-top: 1rem;
+  max-inline-size: 100%;
+  overflow: auto;
+  padding: 1.25rem;
+  border-radius: 8px;
+  tab-size: 2;
+}
+
+.prose :where(h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  color: #111127;
+  font-weight: 700;
+  font-size: 1.5em;
+  line-height: 1.333333;
+}
+
+.prose :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  color: var(--tw-prose-headings);
+  font-weight: 600;
+  font-size: 1.25em;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  line-height: 1.6;
+}
+
+.prose :where(.prose > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  margin-bottom: 0;
+}
+
+.prose :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}

@@ -2,19 +2,34 @@
   import { page } from '$app/stores';
 </script>
 
-<div>
-  <h2 class="text-4xl font-[600]">Oh ohh!</h2>
-  {#if $page?.error?.message}
-    <p class="error">{$page?.error?.message}</p>
-  {:else}
-    <p class="error">Something went wrong. Don't worry, we use Sentry!</p>
-  {/if}
+<div class="error">
+  <h1>{$page.status}: {$page.error?.message}</h1>
+  <p class="text-center">
+    <a href="/">Go back</a>
+  </p>
 </div>
 
 <style>
+  * {
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      'Open Sans',
+      'Helvetica Neue',
+      sans-serif;
+  }
   .error {
-    color: #f90000;
+    height: 100vh;
+    display: grid;
+    place-content: center;
+  }
+  .text-center {
     text-align: center;
-    margin-top: 1rem;
   }
 </style>

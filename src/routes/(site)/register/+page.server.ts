@@ -41,9 +41,9 @@ export const actions = {
         type: CRM_QUEUE_TYPES.SEND_VERIFICATION_LINK,
         data: {
           email: user.email,
-          verificationLInk: generateVerificationLink(user.userVerify.token),
+          verificationLInk: generateVerificationLink(user.userVerify.token)
         }
-      })
+      });
     }
 
     if (user.roles.includes('admin')) {

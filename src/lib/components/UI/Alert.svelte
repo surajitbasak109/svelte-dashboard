@@ -2,22 +2,20 @@
   export let type: 'success' | 'info' | 'warning' | 'error' = 'info';
   const types = {
     success: 'text-teal-900 bg-teal-100 border-teal-500',
-    info:    'text-blue-900 bg-blue-100 border-blue-500',
+    info: 'text-blue-900 bg-blue-100 border-blue-500',
     warning: 'bg-yellow-100 border-yellow-500 text-yellow-900',
-    error:  'bg-red-100 border-red-500 text-red-900'
-  }
+    error: 'bg-red-100 border-red-500 text-red-900'
+  };
   export let message: string;
 
   $: className = [
-    "px-4 py-3 border-t-4 rounded-b shadow-md",
+    'px-4 py-3 border-t-4 rounded-b shadow-md',
     types[type],
     $$props.class ?? ''
   ].join(' ');
 </script>
 
-<div
-  class={className}
-  role="alert">
+<div class={className} role="alert">
   <div class="flex">
     <div class="py-1">
       <svg

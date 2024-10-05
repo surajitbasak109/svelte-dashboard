@@ -36,3 +36,10 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+## Roadmap
+
+- [ ] Add Imgur OAuth authentication
+      https://apidocs.imgur.com/#3f80c836-8f49-4fb1-95a7-a4b058265d72
+      https://apidocs.imgur.com/#authorization-and-oauth
+      https://api.imgur.com/oauth2

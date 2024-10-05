@@ -1,6 +1,6 @@
 <script lang="ts">
-  import {getFlash} from 'sveltekit-flash-message';
-  import {page} from '$app/stores';
+  import { getFlash } from 'sveltekit-flash-message';
+  import { page } from '$app/stores';
   import AuthButton from '$/lib/components/UI/AuthButton.svelte';
   import Input from '$/lib/components/UI/Input.svelte';
   import getFirstAndLastName from '$/utilities/get_first_and_last_name';
@@ -48,7 +48,7 @@
       });
 
       if (response.ok) {
-        $flash = {type: 'success', message: 'Profile updated'};
+        $flash = { type: 'success', message: 'Profile updated' };
         setTimeout(() => {
           location.reload();
         }, 2000);
@@ -72,7 +72,9 @@
     {#if !userVerified}
       <div class="p-4 mb-3 bg-white rounded-sm shadow-lg">
         <h2 class="my-2 text-2xl font-bold">Verify your account</h2>
-        <p class="text-sm text-slate-600">We've sent you a verification link, please verify your account</p>
+        <p class="text-sm text-slate-600">
+          We've sent you a verification link, please verify your account
+        </p>
       </div>
     {/if}
     <div class="p-4 mb-3 bg-white rounded-sm shadow-lg">
