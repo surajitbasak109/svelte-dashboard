@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { getFlash } from 'sveltekit-flash-message';
+  import { page } from '$app/stores';
   import AuthButton from '$/lib/components/UI/AuthButton.svelte';
   import Input from '$/lib/components/UI/Input.svelte';
   import getFirstAndLastName from '$/utilities/get_first_and_last_name';
@@ -6,7 +8,9 @@
   import { getContext } from 'svelte';
   import Dropzone from 'svelte-file-dropzone';
 
+  const flash = getFlash(page);
   const user = getContext('user');
+  let isProfileUpdateBtnDisabled = false;
 
   const firstAndLastName = getFirstAndLastName($user?.name);
   const userVerified = isUserVerified($user?.userVerify);
@@ -32,6 +36,8 @@
     formData.append('username', username);
     formData.append('avatar_image', avatarImageFile);
 
+    isProfileUpdateBtnDisabled = true;
+
     try {
       const response = await fetch('/api/update-profile', {
         method: 'POST',
@@ -42,12 +48,17 @@
       });
 
       if (response.ok) {
-        alert('Profile updated');
+        $flash = { type: 'success', message: 'Profile updated' };
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
       } else {
         console.error('File could not be uploaded');
       }
     } catch (e) {
       console.error(e);
+    } finally {
+      isProfileUpdateBtnDisabled = false;
     }
   }
 </script>
@@ -61,7 +72,9 @@
     {#if !userVerified}
       <div class="p-4 mb-3 bg-white rounded-sm shadow-lg">
         <h2 class="my-2 text-2xl font-bold">Verify your account</h2>
-        <p class="text-sm text-slate-600">We've sent you a verification link, please verify your account</p>
+        <p class="text-sm text-slate-600">
+          We've sent you a verification link, please verify your account
+        </p>
       </div>
     {/if}
     <div class="p-4 mb-3 bg-white rounded-sm shadow-lg">
@@ -112,7 +125,7 @@
         </fieldset>
 
         <div class="my-2">
-          <AuthButton type="submit">Save</AuthButton>
+          <AuthButton type="submit" disabled={isProfileUpdateBtnDisabled}>Save</AuthButton>
         </div>
       </form>
     </div>

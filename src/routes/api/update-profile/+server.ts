@@ -31,7 +31,7 @@ export const POST = async ({ request, locals }) => {
       }
     } catch (e) {
       console.error(e);
-      throw new Error("Error when trying to upload");
+      throw new Error('Error when trying to upload');
     }
   }
 

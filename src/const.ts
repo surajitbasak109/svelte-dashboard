@@ -12,5 +12,5 @@ export interface User {
 }
 
 export const CRM_QUEUE_TYPES = {
-  SEND_VERIFICATION_LINK: 'send-verification-link',
-}
+  SEND_VERIFICATION_LINK: 'send-verification-link'
+};
