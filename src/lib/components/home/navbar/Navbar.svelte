@@ -24,7 +24,8 @@
     { title: 'Contact', path: '/contact' },
     { title: 'FAQs', path: '/faqs' },
     { title: 'Features', path: '/features' },
-    { title: 'Career', path: '/career' }
+    { title: 'Career', path: '/career' },
+    { title: 'RSS', path: '/rss.xml' }
   ];
 
   const authMenuItems = [

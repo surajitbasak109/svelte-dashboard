@@ -55,7 +55,7 @@ export const actions = {
     });
 
     const redirectRoute = user.roles[0].role.name == 'admin' ? '/admin' : '/protected';
-    
+
     redirect(302, redirectRoute);
   }
 } satisfies Actions;

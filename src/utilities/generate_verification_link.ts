@@ -1,4 +1,4 @@
-import app from "$/config/app";
+import app from '$/config/app';
 
 /**
  * Generates a verification link
@@ -6,5 +6,5 @@ import app from "$/config/app";
  * @returns {string} The verification link
  */
 export function generateVerificationLink(token: string): string {
-    return `${app.url}/verify?token=${token}`;
+  return `${app.url}/verify?token=${token}`;
 }

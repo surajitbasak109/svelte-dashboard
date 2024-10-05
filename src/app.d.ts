@@ -17,7 +17,9 @@ declare global {
         country: string;
       };
     }
-    // interface PageData {}
+    interface PageData {
+      flash?: { type: 'success' | 'error' | 'info' | 'warning'; message: string };
+    }
     // interface PageState {}
     // interface Platform {}
   }

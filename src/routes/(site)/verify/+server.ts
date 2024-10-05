@@ -6,7 +6,7 @@ export async function GET({ url }) {
     redirect(302, '/');
   }
   const token = url.searchParams.get('token') as string;
-  
+
   let verified;
 
   try {

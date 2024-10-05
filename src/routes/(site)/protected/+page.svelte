@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Container from "$/lib/components/home/Container.svelte";
-
+  import Container from '$/lib/components/home/Container.svelte';
 </script>
+
 <svelte:head>
   <title>Home</title>
 </svelte:head>
