@@ -15,18 +15,20 @@ datasource db {
 }
 
 model User {
-  id          String     @id @default(uuid())
-  name        String?
-  username    String?
-  password    String
-  email       String    @unique
-  github_id   Int?       @unique
-  avatar_url  String?
-  session     Session[]
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @updatedAt
-  roles       UserRole[]
-  userVerify  UserVerify?
+  id            String     @id @default(uuid())
+  name          String?
+  username      String?
+  password      String
+  email         String    @unique
+  github_id     Int?       @unique
+  avatar_url    String?
+  session       Session[]
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+
+  roles         UserRole[]
+  userVerify    UserVerify?
+  userAccounts  UserAccount[]
 }
 
 model UserVerify {
@@ -69,4 +71,62 @@ model Session {
   country       String?
 
   @@index([user_id])
+}
+
+model AccountType {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  accounts Account[]
+  createdAt       DateTime    @default(now())
+}
+
+model Account {
+  id              Int             @id @default(autoincrement())
+  name            String
+  description     String?
+  accountTypeId   Int
+  balance         Float           @default(0)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @default(now())
+
+  accountType     AccountType     @relation(fields: [accountTypeId], references: [id], onDelete: Cascade)
+  transactions    Transaction[]
+  userAccounts    UserAccount[]
+}
+
+model AccountingCategory {
+  id            Int               @id @default(autoincrement())
+  name          String
+  type          IncomeOrExpense
+  createdAt     DateTime          @default(now())
+
+  transactions  Transaction[]
+}
+
+enum IncomeOrExpense {
+  Income
+  Expense
+}
+
+model Transaction {
+  id                        Int                   @id @default(autoincrement())
+  accountId                 Int
+  accountingCategoryId      Int
+  amount                    Float
+  type                      IncomeOrExpense
+  description               String?
+  createdAt                 DateTime              @default(now())
+
+  account                   Account               @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  accountingCategory        AccountingCategory    @relation(fields: [accountingCategoryId], references: [id], onDelete: Cascade)
+}
+
+model UserAccount {
+  id        String     @id @default(uuid())
+  userId    String 
+  accountId Int
+  role      String
+
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account   Account     @relation(fields: [accountId], references: [id], onDelete: Cascade)
 }

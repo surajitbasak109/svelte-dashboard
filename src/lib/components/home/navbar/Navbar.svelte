@@ -32,8 +32,6 @@
     { title: 'Login', path: '/login' },
     { title: 'Sign up', path: '/register' }
   ];
-
-  const routeId = $page.route?.id;
 </script>
 
 <Container>
@@ -53,7 +51,7 @@
           <li>
             <a
               class="flex items-center py-2 text-gray-500 lg:px-3 hover:text-gray-900"
-              class:active={routeId?.includes(path || '')}
+              class:active={$page.route?.id?.includes(path || '')}
               href={path}>
               <span>{title}</span>
             </a>
@@ -77,7 +75,7 @@
     {:else}
       <div class="items-center hidden gap-4 lg:flex">
         {#each authMenuItems as { title, path }}
-          <Link href={path} style={routeId?.includes(path) ? 'primary' : 'outline'} size="md">
+          <Link href={path} style={$page.route?.id?.includes(path) ? 'primary' : 'outline'} size="md">
             {title}
           </Link>
         {/each}

@@ -1,5 +1,11 @@
 <script lang="ts">
   export let type: 'success' | 'info' | 'warning' | 'error' = 'info';
+  const iconColors = {
+    success: 'text-teal-500',
+    info: 'text-blue-500',
+    warning: 'text-yellow-500',
+    error: 'text-red-500'
+  }
   const types = {
     success: 'text-teal-900 bg-teal-100 border-teal-500',
     info: 'text-blue-900 bg-blue-100 border-blue-500',
@@ -9,17 +15,17 @@
   export let message: string;
 
   $: className = [
-    'px-4 py-3 border-t-4 rounded-b shadow-md',
+    'px-4 py-3 border-t-4 rounded-b shadow-md fixed bottom-5 right-5',
     types[type],
     $$props.class ?? ''
   ].join(' ');
 </script>
 
 <div class={className} role="alert">
-  <div class="flex">
+  <div class="flex items-center justify-center">
     <div class="py-1">
       <svg
-        class="w-6 h-6 mr-4 text-teal-500 fill-current"
+        class="{`w-6 h-6 mr-4 fill-current ${iconColors[type]}`}"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20">
         <path

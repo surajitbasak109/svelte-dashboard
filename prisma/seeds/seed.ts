@@ -2,6 +2,7 @@
 // @ts-nocheck
 import { PrismaClient } from '@prisma/client';
 import create_default_user from './create_default_user';
+import create_account_types from './create_account_types';
 
 // node --loader ts-node/esm prisma/seed.ts
 
@@ -19,6 +20,7 @@ async function main() {
   }
 
   await create_default_user();
+  await create_account_types();
 }
 
 main()
